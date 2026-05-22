@@ -38,14 +38,17 @@ app.use("/api/chat", chatRoutes);
 
 // 2. CẤU HÌNH ĐƯỜNG DẪN ĐỂ QUẢN LÝ FRONTEND
 if (process.env.NODE_ENV === "production") {
+  // process.cwd() đảm bảo trỏ đúng thư mục gốc của project trên Render
+  const rootDir = process.cwd(); 
+  
+  // Trỏ chính xác vào thư mục frontend/dist
+  app.use(express.static(path.join(rootDir, "frontend", "dist")));
 
-  app.use(express.static(path.join(__dirname, "frontend", "dist")));
-
+  // Trả về file index.html cho mọi route của Frontend
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+    res.sendFile(path.join(rootDir, "frontend", "dist", "index.html"));
   });
 }
-
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   connectDB();
