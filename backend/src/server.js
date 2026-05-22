@@ -36,11 +36,10 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/chat", chatRoutes);
 
-// 2. CẤU HÌNH ĐƯỜNG DẪN ĐỂ QUẢN LÝ FRONTEND
+// CẤU HÌNH ĐƯỜNG DẪN ĐỂ QUẢN LÝ FRONTEND
 if (process.env.NODE_ENV === "production") {
-
-  
-  const frontendDistPath = path.join(__dirname, "../../../frontend/dist");
+  // Đi ngược ra 3 cấp từ backend/src/server.js để tìm frontend/dist một cách tuyệt đối
+  const frontendDistPath = path.resolve(__dirname, "..", "..", "..", "frontend", "dist");
 
   app.use(express.static(frontendDistPath));
 
