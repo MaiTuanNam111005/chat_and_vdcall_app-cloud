@@ -38,11 +38,16 @@ app.use("/api/chat", chatRoutes);
 
 // CẤU HÌNH ĐƯỜNG DẪN ĐỂ QUẢN LÝ FRONTEND
 if (process.env.NODE_ENV === "production") {
-  // Đi ngược ra 3 cấp từ backend/src/server.js để tìm frontend/dist một cách tuyệt đối
-  const frontendDistPath = path.resolve(__dirname, "..", "..", "..", "frontend", "dist");
+ 
+  const rootDir = process.cwd(); 
+  
+
+  const frontendDistPath = path.join(rootDir, "frontend", "dist");
+
 
   app.use(express.static(frontendDistPath));
 
+ 
   app.get("*", (req, res) => {
     res.sendFile(path.join(frontendDistPath, "index.html"));
   });
